@@ -10,4 +10,4 @@ EXPOSE 5000
 
 ENTRYPOINT [ "python" ]
 
-CMD [ "src/main_scores.py" ]
+CMD [ "src/Main_Scores.py" ]

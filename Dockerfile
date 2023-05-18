@@ -1,11 +1,13 @@
 FROM python:3.10-alpine
 
-COPY . /app
-
 WORKDIR /app
+
+COPY . .
 
 RUN pip install -r requirements.txt
 
 EXPOSE 5000
 
-CMD [ "src/MainScores.py" ]
+RUN chmod +x ./src/MainScores.py
+
+CMD [ "./src/MainScores.py" ]

@@ -8,6 +8,4 @@ RUN pip install -r requirements.txt
 
 EXPOSE 5000
 
-ENTRYPOINT [ "python" ]
-
-CMD [ "src/Main_Scores.py" ]
+CMD [ "src/MainScores.py" ]

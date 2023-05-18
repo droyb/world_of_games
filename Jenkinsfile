@@ -28,7 +28,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')]) {
                     sh 'docker login -u $DOCKER_ID -p $DOCKER_PASSWORD'
-                    sh 'docker push djroyb/world_of_games:latest'
+                    sh 'docker push droyb/world_of_games:latest'
                 }
                 sh 'docker-compose down;docker rmi $(docker images -q)'
             }

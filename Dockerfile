@@ -4,7 +4,7 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-EXPOSE 8777
+EXPOSE 5000
 
 RUN chmod +x src/MainScores.py
 

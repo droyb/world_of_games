@@ -10,5 +10,4 @@ services:
       - "8777:8000"
     volumes:
       - "./src/MainScores.py:/app/src/MainScores.py"
-      - "./score.txt:/app/score.txt"
-
+      - "./src/Scores.txt:/app/Scores.txt"

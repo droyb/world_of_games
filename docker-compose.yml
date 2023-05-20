@@ -1,18 +1,14 @@
-version: '3'
-
+version: '3.9'
 services:
-  web:
-    container_name: roy
+  worldofgames:
+    image: scores_img
+    container_name: scores
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8777:8000"
     volumes:
-      - "./:/app"
-    networks:
-      - my_app
+      - "./src/MainScores.py:/app/src/MainScores.py"
+      - "./score.txt:/app/score.txt"
 
-networks:
-  my_app:
-    driver: bridge

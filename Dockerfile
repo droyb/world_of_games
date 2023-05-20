@@ -1,13 +1,7 @@
-WORKDIR /app
-
+FROM python
 COPY . .
-
+COPY requirements.txt .
 RUN pip install -r requirements.txt
-
-EXPOSE 5000
-
-RUN chmod +x src/MainScores.py
-
-COPY Scores.txt /Scores.txt
-
-CMD [ "python", "/app/src/MainScores.py" ]
+RUN mkdir /app
+WORKDIR /app
+CMD python MainScores.py

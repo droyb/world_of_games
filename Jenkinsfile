@@ -1,36 +1,42 @@
 pipeline {
     agent any
-    triggers {
-        pollSCM '*/5 * * * *'
-    }
+    
     stages {
         stage('Checkout') {
             steps {
-                git "https://github.com/droyb/world_of_games.git"
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: '*/main']],
+                          userRemoteConfigs: [[url: 'https://github.com/droyb/world_of_games.git']]])
             }
         }
-        stage("Build") {
+        
+        stage('Build') {
             steps {
                 sh 'docker-compose build'
             }
         }
-        stage("Run") {
+        
+        stage('Run') {
             steps {
                 sh 'docker-compose up -d'
             }
         }
-        stage("Test") {
+        
+        stage('Test') {
             steps {
-                sh 'docker exec roy python tests/e2e.py'
+                sh 'sleep 10'
+                sh 'python tests/e2e.py'
             }
         }
-        stage("Finalize") {
+        
+        stage('Finalize') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')]) {
-                    sh 'docker login -u $DOCKER_ID -p $DOCKER_PASSWORD'
-                    sh 'docker push droyb/world_of_games:latest'
+                sh 'docker-compose down'
+                withCredentials([usernamePassword(credentialsId: '7af43511-4004-4cd8-a542-9d1fc312f4ab', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                    sh 'docker-compose build world_of_games'
+                    sh 'docker-compose push world_of_games'
                 }
-                sh 'docker-compose down;docker rmi $(docker images -q)'
             }
         }
     }

@@ -1,13 +1,13 @@
-FROM python:3.6
-
 WORKDIR /app
 
 COPY . .
 
 RUN pip install -r requirements.txt
 
-EXPOSE 5000
+EXPOSE 8777
 
-RUN chmod +x ./src/MainScores.py
+RUN chmod +x src/MainScores.py
 
-CMD [ "./src/MainScores.py" ]
+COPY Scores.txt /Scores.txt
+
+CMD [ "python", "/app/src/MainScores.py" ]
